@@ -1,5 +1,5 @@
 import { zip } from "./deps.ts";
-const nums = Deno.readTextFileSync("1.txt").split("\n").map((n) =>
+const nums = Deno.readTextFileSync("../data/1.txt").split("\n").map((n) =>
   parseInt(n, 10)
 );
 let jumps = 0;

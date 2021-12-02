@@ -1,5 +1,5 @@
 import { slidingWindows } from "./deps.ts";
-import { readData} from "./common.ts";
+import { readData } from "./common.ts";
 const nums = readData("1.txt").split("\n").map((n) => parseInt(n, 10));
 let jumps = 0;
 let last = nums[0];

@@ -6,5 +6,5 @@ const root = path.dirname(
 );
 
 export function readData(name: string): string {
-    return Deno.readTextFileSync(path.join(root, "..", "data", name));
+  return Deno.readTextFileSync(path.join(root, "..", "data", name));
 }

@@ -14,9 +14,9 @@ function computeGamma(readings: number[]): number {
 }
 
 function part1() {
-    const gamma = computeGamma(allReadings);
-    const epsilon = (~gamma) & 4095;
-    console.log(`gamma * epsilon = ${gamma * epsilon}`);
+  const gamma = computeGamma(allReadings);
+  const epsilon = (~gamma) & 4095;
+  console.log(`gamma * epsilon = ${gamma * epsilon}`);
 }
 
-part1()
+part1();

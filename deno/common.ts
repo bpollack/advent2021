@@ -25,3 +25,11 @@ export async function* readDataLines(
     if (file != null) Deno.close(file.rid);
   }
 }
+
+export function sum(nums: number[]): number {
+  let sum = 0;
+  for (const num of nums) {
+    sum += num;
+  }
+  return sum;
+}

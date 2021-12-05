@@ -1,4 +1,4 @@
-import { readDataLines } from "./common.ts";
+import { readDataLines, sum } from "./common.ts";
 
 const bitCounts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 let lineCount = 0;
@@ -9,9 +9,6 @@ for await (const bits of readDataLines("3.txt")) {
     bitCounts[idx] += (v >> idx) & 1;
   }
 }
-const gamma = parseInt(
-  bitCounts.reverse().map((n) => Math.round(n / lineCount)).join(""),
-  2,
-);
+const gamma = sum(bitCounts.map((n, idx) => Math.round(n / lineCount) << idx));
 const epsilon = (~gamma) & 4095;
 console.log(`gamma * epsilon = ${gamma * epsilon}`);

@@ -10,6 +10,10 @@ export function readData(name: string): string {
   return Deno.readTextFileSync(path.join(root, "..", "data", name));
 }
 
+export function readDataLinesSync(filename: string): string[] {
+  return readData(filename).split("\n").filter((l) => l.trim() !== "");
+}
+
 export async function* readDataLines(
   filename: string,
 ): AsyncIterableIterator<string> {

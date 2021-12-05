@@ -18,20 +18,28 @@ function computeGamma(readings: number[]): number {
   );
 }
 
-function computeEpsilon(readings: number[]): number {
-  return (~sum(
-    bitCounts(readings).map((n, idx) =>
-      (-Math.round(-n / readings.length)) << idx
-    ),
-  )) & 4095;
+function part1() {
+  const gamma = computeGamma(allReadings);
+  console.log(`gamma * epsilon = ${gamma * (~gamma & 4095)}`);
 }
 
-function part1() {
-  console.log(
-    `gamma * epsilon = ${
-      computeGamma(allReadings) * computeEpsilon(allReadings)
-    }`,
-  );
+function part2() {
+  let o2 = allReadings;
+  for (let shift = 12; o2.length > 1 && shift >= 0; shift--) {
+    const gamma = computeGamma(o2);
+    o2 = o2.filter((reading) =>
+      ((reading >> shift) & 1) === ((gamma >> shift) & 1)
+    );
+  }
+  let co2 = allReadings;
+  for (let shift = 12; co2.length > 1 && shift >= 0; shift--) {
+    const epsilon = (~computeGamma(co2)) & 4095;
+    co2 = co2.filter((reading) =>
+      ((reading >> shift) & 1) === ((epsilon >> shift) & 1)
+    );
+  }
+  console.log(`O2 * CO2 = ${o2[0] * co2[0]}`);
 }
 
 part1();
+part2();

@@ -27,16 +27,16 @@ function part2() {
   let o2 = allReadings;
   for (let shift = 12; o2.length > 1 && shift >= 0; shift--) {
     const gamma = computeGamma(o2);
-    o2 = o2.filter((reading) =>
-      ((reading >> shift) & 1) === ((gamma >> shift) & 1)
-    );
+    const mask = 1 << shift;
+    const maskedGamma = gamma & mask;
+    o2 = o2.filter((reading) => (reading & mask) === maskedGamma);
   }
   let co2 = allReadings;
   for (let shift = 12; co2.length > 1 && shift >= 0; shift--) {
     const epsilon = (~computeGamma(co2)) & 4095;
-    co2 = co2.filter((reading) =>
-      ((reading >> shift) & 1) === ((epsilon >> shift) & 1)
-    );
+    const mask = 1 << shift;
+    const maksedEpsilon = epsilon & mask;
+    co2 = co2.filter((reading) => (reading & mask) === maksedEpsilon);
   }
   console.log(`O2 * CO2 = ${o2[0] * co2[0]}`);
 }

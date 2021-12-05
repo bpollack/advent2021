@@ -1,11 +1,7 @@
-import { readData } from "./common.ts";
-
-const instructions = readData("2.txt").split("\n").filter((l) =>
-  l.trim() !== ""
-);
+import { readDataLines } from "./common.ts";
 
 let [depth, pos, aim] = [0, 0, 0];
-for (const instruction of instructions) {
+for await (const instruction of readDataLines("2.txt")) {
   const [direction, amountString] = instruction.split(" ");
   const amount = parseInt(amountString);
   switch (direction) {

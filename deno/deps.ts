@@ -4,3 +4,4 @@ export {
   zip,
 } from "https://deno.land/std@0.117.0/collections/mod.ts";
 export { path };
+export { readLines } from "https://deno.land/std@0.117.0/io/mod.ts";

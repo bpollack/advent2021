@@ -1,4 +1,5 @@
 import { path } from "./deps.ts";
+import { readLines } from "./deps.ts";
 const root = path.dirname(
   Deno.build.os === "windows"
     ? path.win32.fromFileUrl(import.meta.url)
@@ -7,4 +8,20 @@ const root = path.dirname(
 
 export function readData(name: string): string {
   return Deno.readTextFileSync(path.join(root, "..", "data", name));
+}
+
+export async function* readDataLines(
+  filename: string,
+): AsyncIterableIterator<string> {
+  let file: Deno.File | undefined;
+  try {
+    file = Deno.openSync(path.join(root, "..", "data", filename), {
+      read: true,
+    });
+    for await (const line of readLines(file)) {
+      if (line.trim() !== "") yield line;
+    }
+  } finally {
+    if (file != null) Deno.close(file.rid);
+  }
 }

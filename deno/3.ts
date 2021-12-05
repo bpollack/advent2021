@@ -1,22 +1,37 @@
 import { readDataLinesSync, sum } from "./common.ts";
 
 const allReadings = readDataLinesSync("3.txt").map((line) => parseInt(line, 2));
-function computeGamma(readings: number[]): number {
-  const bitCounts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+function bitCounts(readings: number[]): number[] {
+  const counts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   for (const reading of readings) {
-    for (let idx = 0; idx < bitCounts.length; idx++) {
-      bitCounts[idx] += (reading >> idx) & 1;
+    for (let idx = 0; idx < counts.length; idx++) {
+      counts[idx] += (reading >> idx) & 1;
     }
   }
+  return counts;
+}
+
+function computeGamma(readings: number[]): number {
   return sum(
-    bitCounts.map((n, idx) => Math.round(n / readings.length) << idx),
+    bitCounts(readings).map((n, idx) => Math.round(n / readings.length) << idx),
   );
 }
 
+function computeEpsilon(readings: number[]): number {
+  return (~sum(
+    bitCounts(readings).map((n, idx) =>
+      (-Math.round(-n / readings.length)) << idx
+    ),
+  )) & 4095;
+}
+
 function part1() {
-  const gamma = computeGamma(allReadings);
-  const epsilon = (~gamma) & 4095;
-  console.log(`gamma * epsilon = ${gamma * epsilon}`);
+  console.log(
+    `gamma * epsilon = ${
+      computeGamma(allReadings) * computeEpsilon(allReadings)
+    }`,
+  );
 }
 
 part1();
